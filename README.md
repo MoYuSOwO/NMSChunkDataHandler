@@ -32,10 +32,10 @@ This library provides a complete solution for parsing and modifying Minecraft se
 
 ## ⚠️ Version Limitations
 
-Current implementation targets **1.18.2** server core, with main limitations including:
+Current implementation targets **1.21.4** server core, with main limitations including:
 - Uses reflection to access certain fields (may fail across NMS versions)
-- `Block.stateById()` method changes in later versions
-- Biome data processing requires protocol adaptation
+- `Block.stateById()` method may changes in different versions
+- Data processing requires protocol adaptation
 
 Recommended adjustments when forking for target server versions (no guarantee of functionality after version changes):
 1. Update NMS class paths
