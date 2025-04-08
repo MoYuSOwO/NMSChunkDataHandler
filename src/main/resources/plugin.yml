@@ -1,0 +1,6 @@
+name: NMSChunkDataHandler
+version: '1.0-beta'
+main: io.github.MoYuSOwO.nMSChunkDataHandler.NMSChunkDataHandler
+api-version: '1.21'
+authors: [ MoYuOwO ]
+description: NMSChunkDataHandler
