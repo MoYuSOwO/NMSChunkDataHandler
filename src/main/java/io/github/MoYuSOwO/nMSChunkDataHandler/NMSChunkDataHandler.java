@@ -22,7 +22,7 @@ public final class NMSChunkDataHandler extends JavaPlugin implements Listener {
         CraftPlayer craftPlayer = (CraftPlayer) player;
         ServerPlayer serverPlayer = craftPlayer.getHandle();
         serverPlayer.connection.connection.channel.pipeline().addBefore(
-                "packet_handler", "NMS_custom_handler", new NMSBlockHandler(serverPlayer)
+                "packet_handler", "NMS_custom_handler", new NMSBlockHandler()
         );
     }
 

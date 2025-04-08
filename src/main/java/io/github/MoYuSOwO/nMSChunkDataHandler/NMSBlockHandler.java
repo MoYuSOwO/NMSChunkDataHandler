@@ -9,7 +9,6 @@ import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkPacketData;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacket;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.BitStorage;
 import net.minecraft.util.SimpleBitStorage;
 import net.minecraft.world.level.block.Block;
