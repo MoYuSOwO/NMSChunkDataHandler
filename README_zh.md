@@ -40,43 +40,14 @@
 2. 替换API调用
 3. 测试各数据包结构
 
-## 🛠️ 快速开始 / Quick Start
-
-```java
-// 注册数据包处理器
-public class MyPlugin extends JavaPlugin implements Listener {
-    @Override
-    public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, this);
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        ((CraftPlayer)e.getPlayer()).getHandle()
-            .connection.connection.channel.pipeline()
-            .addBefore("packet_handler", "my_handler", new NMSBlockHandler());
-    }
-}
-
-// 自定义替换规则
-public class CustomHandler extends NMSBlockHandler {
-    @Override
-    protected BlockState getReplacement(BlockState original) {
-        return original.is(Blocks.GRASS_BLOCK) ? 
-            Blocks.DIAMOND_BLOCK.defaultBlockState() : 
-            original;
-    }
-}
-```
-
 ## 📚 开发文档 / Documentation
 
-### 核心类说明
-| 类 | 功能           |
-|----|--------------|
+### 核心类说明（代码基本是不言自明的）
+| 类                     | 功能           |
+|-----------------------|--------------|
 | `NMSChunkDataHandler` | 插件主类和包管理注册逻辑 |
-| `NMSBlockHandler` | 区块字节流解析逻辑    |
-| `ReflectionUtil` | 反射工具类        |
+| `NMSBlockHandler`     | 区块字节流解析逻辑    |
+| `ReflectionUtil`      | 反射工具类        |
 
 ### 扩展建议
 1. 创建自定义替换规则

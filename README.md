@@ -42,38 +42,9 @@ Recommended adjustments when forking for target server versions (no guarantee of
 2. Replace API calls
 3. Test all packet structures
 
-## 🛠️ Quick Start
-
-```java
-// Register packet processor
-public class MyPlugin extends JavaPlugin implements Listener {
-    @Override
-    public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, this);
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        ((CraftPlayer)e.getPlayer()).getHandle()
-            .connection.connection.channel.pipeline()
-            .addBefore("packet_handler", "my_handler", new NMSBlockHandler());
-    }
-}
-
-// Custom replacement rules
-public class CustomHandler extends NMSBlockHandler {
-    @Override
-    protected BlockState getReplacement(BlockState original) {
-        return original.is(Blocks.GRASS_BLOCK) ? 
-            Blocks.DIAMOND_BLOCK.defaultBlockState() : 
-            original;
-    }
-}
-```
-
 ## 📚 Documentation
 
-### Core Classes
+### Core Classes (The code is mostly self-explanatory)
 | Class | Functionality |
 |-------|---------------|
 | `NMSChunkDataHandler` | Main plugin class and package registration logic |
