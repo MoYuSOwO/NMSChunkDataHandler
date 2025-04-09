@@ -32,35 +32,35 @@ public class NMSBlockHandler extends ChannelDuplexHandler {
             ClientboundLevelChunkPacketData chunkData = packet.getChunkData();
             byte[] buffer = (byte[]) ReflectionUtil.getField(chunkData, "buffer");
             FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.wrappedBuffer(buffer));
-            FriendlyByteBuf newbuf = new FriendlyByteBuf(Unpooled.buffer());
+            FriendlyByteBuf newBuf = new FriendlyByteBuf(Unpooled.buffer());
             while (buf.readerIndex() < buffer.length) {
                 int nonEmptyBlock = buf.readShort();
-                newbuf.writeShort(nonEmptyBlock);
+                newBuf.writeShort(nonEmptyBlock);
                 int bitsPerBlock = buf.readByte();
-                newbuf.writeByte(bitsPerBlock);
+                newBuf.writeByte(bitsPerBlock);
                 if (bitsPerBlock == 0) {
                     int stateId = buf.readVarInt();
                     if (Block.stateById(stateId).equals(grassBlock)) {
-                        newbuf.writeVarInt(Block.getId(diamondBlock));
+                        newBuf.writeVarInt(Block.getId(diamondBlock));
                     } else {
-                        newbuf.writeVarInt(stateId);
+                        newBuf.writeVarInt(stateId);
                     }
                     long[] data = buf.readLongArray();
-                    newbuf.writeLongArray(data);
+                    newBuf.writeLongArray(data);
                 } else if (bitsPerBlock <= 8) {
                     int sizeOfPalette = buf.readVarInt();
-                    newbuf.writeVarInt(sizeOfPalette);
+                    newBuf.writeVarInt(sizeOfPalette);
                     int[] palette = new int[sizeOfPalette];
                     for (int i = 0; i < sizeOfPalette; i++) {
                         palette[i] = buf.readVarInt();
                         if (Block.stateById(palette[i]).equals(grassBlock)) {
-                            newbuf.writeVarInt(Block.getId(diamondBlock));
+                            newBuf.writeVarInt(Block.getId(diamondBlock));
                         } else {
-                            newbuf.writeVarInt(palette[i]);
+                            newBuf.writeVarInt(palette[i]);
                         }
                     }
                     long[] data = buf.readLongArray();
-                    newbuf.writeLongArray(data);
+                    newBuf.writeLongArray(data);
                 } else {
                     long[] data = buf.readLongArray();
                     BitStorage storage = new SimpleBitStorage(bitsPerBlock, 4096, data);
@@ -70,31 +70,31 @@ public class NMSBlockHandler extends ChannelDuplexHandler {
                             storage.set(pos, Block.getId(diamondBlock));
                         }
                     }
-                    newbuf.writeLongArray(storage.getRaw());
+                    newBuf.writeLongArray(storage.getRaw());
                 }
                 int bitPerBiome = buf.readByte();
-                newbuf.writeByte(bitPerBiome);
+                newBuf.writeByte(bitPerBiome);
                 if (bitPerBiome == 0) {
                     int sizeOfPalette = buf.readVarInt();
-                    newbuf.writeVarInt(sizeOfPalette);
+                    newBuf.writeVarInt(sizeOfPalette);
                     long[] data = buf.readLongArray();
-                    newbuf.writeLongArray(data);
+                    newBuf.writeLongArray(data);
                 } else if (bitPerBiome <= 3) {
                     int sizeOfPalette = buf.readVarInt();
-                    newbuf.writeVarInt(sizeOfPalette);
+                    newBuf.writeVarInt(sizeOfPalette);
                     int[] palette = new int[sizeOfPalette];
                     for (int i = 0; i < sizeOfPalette; i++) {
                         palette[i] = buf.readVarInt();
-                        newbuf.writeVarInt(palette[i]);
+                        newBuf.writeVarInt(palette[i]);
                     }
                     long[] data = buf.readLongArray();
-                    newbuf.writeLongArray(data);
+                    newBuf.writeLongArray(data);
                 } else {
                     long[] data = buf.readLongArray();
-                    newbuf.writeLongArray(data);
+                    newBuf.writeLongArray(data);
                 }
             }
-            ReflectionUtil.setField(chunkData, "buffer", newbuf.array());
+            ReflectionUtil.setField(chunkData, "buffer", newBuf.array());
         } else if (msg instanceof ClientboundSectionBlocksUpdatePacket packet) {
             BlockState[] states = (BlockState[]) ReflectionUtil.getField(packet, "states");
             for (int i = 0; i < states.length; i++) {
